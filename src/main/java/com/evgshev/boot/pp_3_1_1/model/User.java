@@ -1,5 +1,8 @@
 package com.evgshev.boot.pp_3_1_1.model;
 
+
+
+
 import javax.persistence.*;
 
 @Entity
@@ -18,13 +21,6 @@ public class User {
 
     public User() {
     }
-
-//    public User(String name, String surname, String email) {
-//        this.name = name;
-//        this.surname = surname;
-//        this.email = email;
-//    }
-
 
     public User(int id, String name, String surname, String email) {
         this.id = id;

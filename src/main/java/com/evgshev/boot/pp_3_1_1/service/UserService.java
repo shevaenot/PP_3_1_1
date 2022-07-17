@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public User getUserId(int id) {
-        return userDAO.getReferenceById(id);
+        return userDAO.getOne(id);
     }
 
     public void addUser(User user) {
@@ -34,7 +34,4 @@ public class UserService {
         userDAO.deleteById(id);
     }
 
-//    public void updateUser(User user) {
-//        userDAO.getById(user);
-//    }
 }

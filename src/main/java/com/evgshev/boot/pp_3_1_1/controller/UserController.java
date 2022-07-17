@@ -4,14 +4,15 @@ package com.evgshev.boot.pp_3_1_1.controller;
 import com.evgshev.boot.pp_3_1_1.model.User;
 import com.evgshev.boot.pp_3_1_1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
-@RestController
-@RequestMapping("/ipi")
+@Controller
+@RequestMapping("/")
 public class UserController {
 
     private final UserService userService;
@@ -22,39 +23,38 @@ public class UserController {
     }
 
 @GetMapping("/users")
-public List<User> showAllUsers(Model model) {
+public String showAllUsers(Model model) {
     List<User> allUsers = userService.getAllUsers();
     model.addAttribute("users", allUsers);
-    return allUsers;
+    return "user-list";
 }
 
-    @GetMapping("/users/{id}")
-    public User getUser(@PathVariable int id) {
-        User user = userService.getUserId(id);
-
-        return user;
+    @GetMapping("/user-create")
+    public String createUserForm(User user){
+        return "user-create";
     }
 
-    @PostMapping("/users")
-    public User addNewUser(@RequestBody User user) {
 
+    @PostMapping("/user-create")
+    public String createUser(User user){
         userService.addUser(user);
-        return user;
+        return "redirect:/users";
     }
 
-    @PutMapping("/users")
-    public User updateUser(@RequestBody User user) {
-
-        userService.addUser(user);
-        return user;
-    }
-
-    @DeleteMapping("/users/{id}")
-    public String deleteUser(@PathVariable int id) {
-        User user = userService.getUserId(id);
-
-
+    @GetMapping("user-delete/{id}")
+    public String deleteUser(@PathVariable("id") int id){
         userService.deleteUser(id);
-        return "Employee with ID = " + id + " was deleted";
+        return "redirect:/users";
+    }
+    @GetMapping("/user-update/{id}")
+    public String updateUserForm(@PathVariable("id") int id, Model model) {
+        User user = userService.getUserId(id);
+        model.addAttribute("user", user);
+        return "user-update";
+    }
+    @PostMapping("/user-update")
+    public String updateUser(User user){
+        userService.addUser(user);
+        return "redirect:/users";
     }
 }
